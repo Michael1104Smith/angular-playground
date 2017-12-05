@@ -84,11 +84,11 @@ export class HeatMap {
     // cont.append("svg")
     // .attr(}width)
     // this.container = container;
-    container.append('div')
+    container = container.append('div')
       .style('width', width+'px')
       .style('height', height+'px')
       .style('position', 'relative')
-      .style('top', padding+'px')
+      .style('top', -padding+'px')
       .style('left', -padding+'px')
       ;
 
@@ -106,7 +106,7 @@ export class HeatMap {
       .style('height', (height - 2 * padding) + 'px')
       .style('position', 'absolute')
       .style('top', padding+'px')
-      .style('left', 0+'px');
+      .style('left', padding+'px');
 
     if (!this.settings.noSvg) {
 
@@ -119,7 +119,7 @@ export class HeatMap {
         .style('top', '0')
         .style('left', '0')
         .append('g')
-        .attr('transform', 'translate('+0+','+padding+')');
+        .attr('transform', 'translate('+padding+','+padding+')');
 
       this.svg.append('g').attr('class', 'train');
       this.svg.append('g').attr('class', 'test');
