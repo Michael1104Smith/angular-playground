@@ -85,11 +85,11 @@ export class HeatMap {
     // .attr(}width)
     // this.container = container;
     container.append('div')
-      .style('width:', '${width}px')
-      .style('height:', '${height}px')
-      .style('position:', 'relative')
-      .style('top:', padding+'px')
-      .style('left:', -padding+'px')
+      .style('width', width+'px')
+      .style('height', height+'px')
+      .style('position', 'relative')
+      .style('top', padding+'px')
+      .style('left', -padding+'px')
       ;
 
     // .style({
@@ -106,7 +106,7 @@ export class HeatMap {
       .style('height', (height - 2 * padding) + 'px')
       .style('position', 'absolute')
       .style('top', padding+'px')
-      .style('left', padding+'px');
+      .style('left', 0+'px');
 
     if (!this.settings.noSvg) {
 
@@ -119,7 +119,7 @@ export class HeatMap {
         .style('top', '0')
         .style('left', '0')
         .append('g')
-        .attr('transform', 'translate('+padding+','+padding+')');
+        .attr('transform', 'translate('+0+','+padding+')');
 
       this.svg.append('g').attr('class', 'train');
       this.svg.append('g').attr('class', 'test');
@@ -138,7 +138,7 @@ export class HeatMap {
 
       this.svg.append('g')
         .attr('class', 'x axis')
-        .attr('transform', `translate(0,${height - 2 * padding})`)
+        .attr('transform', 'translate(0,'+(height - 2 * padding)+')')
         .call(xAxis);
 
       this.svg.append('g')
@@ -202,24 +202,31 @@ export class HeatMap {
       return p.x >= xDomain[0] && p.x <= xDomain[1]
         && p.y >= yDomain[0] && p.y <= yDomain[1];
     });
+    container.html('');
 
     // Attach data to initially empty selection.
-    const selection = container.selectAll('circle').data(points);
+    //const selection = container.selectAll('circle').data(points);
 
     // Insert elements to match length of points array.
-    selection.enter().append('circle').attr('r', 3);
-
+    //selection.enter().append('circle').attr('r', 3);
     // Update points to be in the correct position.
-    selection
-      .attr('cx:', (d: Example2D) => this.xScale(d.x))
-      .attr('cy:', (d: Example2D) => this.yScale(d.x))
-      .style('fill', d => this.color(d.label));
+    for(var i = 0; i < points.length; i++){
+      container.append('circle')
+              .attr('r', 3)
+              .attr('cx', this.xScale(points[i].x))
+              .attr('cy', this.yScale(points[i].y))
+              .attr('fill', this.color(points[i].label));
+    }
+    // selection
+    //   .attr('cx', (d) => this.xScale(d.x))
+    //   .attr('cy', (d) => this.yScale(d.y))
+    //   .style('fill', d => this.color(d.label));
     // .attr({
     //   cx: (d: Example2D) => this.xScale(d.x),
     //   cy: (d: Example2D) => this.yScale(d.y),
     // })
     // Remove points if the length has gone down.
-    selection.exit().remove();
+    // selection.exit().remove();
   }
 }  // Close class HeatMap.
 
